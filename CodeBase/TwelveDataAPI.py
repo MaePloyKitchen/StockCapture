@@ -1,5 +1,6 @@
 import requests
 import time
+import json
 
 ticker_symbols = [
     "MSFT",
@@ -13,6 +14,7 @@ ticker_symbols = [
     "SSNLF",
     "TWTR",
 ]
+
 api_key = "YOUR KEY HERE"
 
 
