@@ -1,0 +1,5 @@
+This is where files related to the hardware of the project will go.
+
+This will include:
+    Wiring Diagram
+    3D Model STL Files
