@@ -2,20 +2,18 @@ import StockLCDDisplay
 import TwelveDataAPI
 from time import strftime
 import time
+import os
+import json
 import concurrent.futures
 
-ticker_symbols = [
-    "MSFT",
-    "AAPL",
-    "DIS",
-    "FB",
-    "BABA",
-    "LOW",
-    "AMZN",
-    "GOOG",
-    "SSNLF",
-    "TWTR",
-]
+path = os.path.dirname(os.path.realpath(__file__))
+os.chdir(path)
+
+with open("piconfig.json") as json_data_file:
+    settings = json.load(json_data_file)
+
+ticker_symbols = settings["ticker_symbols"]
+api_key = settings["api_key"]
 
 data = dict()
 is_running = True
@@ -48,7 +46,7 @@ def display_thread():
         StockLCDDisplay.display_iteration(strftime("%I:%M"), local_iterations)
         time.sleep(5)
 
-        if local_iterations == 24:
+        if local_iterations == settings["iterations"]:
             is_running = False
 
 
@@ -57,14 +55,14 @@ def api_thread():
     global iterations
 
     # Run for the first time
-    data = TwelveDataAPI.handle_requests(ticker_symbols)
+    data = TwelveDataAPI.handle_requests(ticker_symbols, api_key)
     iterations = 1
-    time.sleep(900)
+    time.sleep(60 * settings["frequency"])
     while is_running:
-        data = TwelveDataAPI.handle_requests(ticker_symbols)
+        data = TwelveDataAPI.handle_requests(ticker_symbols, api_key)
         iterations += 1
         # Sleep for 15 Minutes
-        time.sleep(900)
+        time.sleep(60 * settings["frequency"])
 
 
 def main():

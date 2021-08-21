@@ -1,21 +1,5 @@
 import requests
 import time
-import json
-
-ticker_symbols = [
-    "MSFT",
-    "AAPL",
-    "DIS",
-    "FB",
-    "BABA",
-    "LOW",
-    "AMZN",
-    "GOOG",
-    "SSNLF",
-    "TWTR",
-]
-
-api_key = "YOUR KEY HERE"
 
 
 def get_stock_price(ticker_symbol, api_key):
@@ -31,7 +15,7 @@ def get_stock_quote(ticker_symbol, api_key):
     return response
 
 
-def handle_requests(ticker_symbols):
+def handle_requests(ticker_symbols, api_key):
     # Returns a dictionary of stock information
     result = dict()
     for symbol in ticker_symbols:
@@ -44,5 +28,6 @@ def handle_requests(ticker_symbols):
 
 
 if __name__ == "__main__":
-    data = handle_requests(ticker_symbols)
-    print(data)
+    # data = handle_requests(ticker_symbols,api_key)
+    # print(data)
+    pass
