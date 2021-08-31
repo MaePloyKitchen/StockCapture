@@ -1,0 +1,5 @@
+-Expanded Display options
+-More customizability
+-Cryptocurrency API
+-Interrupt capabilities
+-File customizability
