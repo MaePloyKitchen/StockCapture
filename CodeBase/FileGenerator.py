@@ -9,13 +9,13 @@ def add_to_file(package, path):
     day = time.localtime().tm_mday
     filename = f"{month}{day}_StockCapture_Results.csv"
 
-    os.chdir(path)
+    os.chdir(path+"/Data")
 
     api_data = package["api_data"]
     iteration = package["iteration"]
     timestamp = package["timestamp"]
-    if not os.path.exists("Data\\" + filename):
-        with open("Data\\" + filename, "w", newline="") as csvfile:
+    if not os.path.exists(filename):
+        with open(filename, "w", newline="") as csvfile:
             writer = csv.writer(csvfile)
             columns = list(api_data["MSFT"]["quote"].keys())
             columns.remove("fifty_two_week")
@@ -23,7 +23,7 @@ def add_to_file(package, path):
             columns.append("Timestamp")
             writer.writerow(columns)
 
-    with open("Data\\" + filename, "a+", newline="") as csvfile:
+    with open(filename, "a+", newline="") as csvfile:
         writer = csv.writer(csvfile)
         for symbol in api_data:
             api_data[symbol]["quote"].pop("fifty_two_week")

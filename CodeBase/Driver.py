@@ -60,16 +60,17 @@ def api_thread(lcd_pipeline, csv_pipeline, event):
         package["api_data"] = TwelveDataAPI.handle_requests(ticker_symbols, api_key)
         package["iteration"] = iterations + 1
         package["timestamp"] = strftime("%I:%M")
+        iterations = package["iteration"]
 
         lcd_pipeline.set_message(package)
         csv_pipeline.set_message(package)
         # Sleep for 15 Minutes
-        time.sleep(60 * settings["frequency"])
+        time.sleep(60 * settings["frequency"]["minutes"])
 
 
 def write_thread(csv_pipeline, event):
     data = dict()
-    while not event.is_set() or not not csv_pipeline.empty():
+    while not event.is_set() or not csv_pipeline.empty():
         if not csv_pipeline.empty():
             data = csv_pipeline.get_message()
         else:
@@ -85,11 +86,11 @@ def while_active():
     lcd_pipeline = Pipeline()
     csv_pipeline = Pipeline()
     event = threading.Event()
-    with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
         executor.submit(api_thread, lcd_pipeline, csv_pipeline, event)
         executor.submit(display_thread, lcd_pipeline, event)
         executor.submit(write_thread, csv_pipeline, event)
-        time.sleep(settings["duration"] * 3600)
+        time.sleep((settings["duration"]["hours"]* 3600)+(settings["duration"]["minutes"]*60))
         event.set()
 
 
@@ -99,3 +100,4 @@ if __name__ == "__main__":
             while_inactive()
         else:
             while_active()
+            break
