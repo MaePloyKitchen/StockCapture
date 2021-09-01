@@ -22,18 +22,22 @@ data = {
         "SSNLF",
         "TWTR",
     ],
-    "iterations": 24,
     "path": path,
     "duration": {
         "hours": 0,
-        "minutes":30,
-        "seconds":0
+        "minutes": 30,
+        "seconds": 0,
     },
     "frequency": {
-        "hours":0,
-        "minutes":15,
-        "seconds":0
-    } 
+        "hours": 0,
+        "minutes": 15,
+        "seconds": 0,
+    },
+    "sleep": {
+        "hours": 0,
+        "minutes": 10,
+        "seconds": 0,
+    },
 }
 
 with open("piconfig.json", "w") as outfile:
@@ -42,5 +46,6 @@ with open("piconfig.json", "w") as outfile:
 print(f"Configuration file created in directory: {path}")
 print("File can be editted further to fit your needs")
 
-#path += "\\Data"
-#os.mkdir("Data")
+
+# path += "\\Data"
+# os.mkdir("Data")
